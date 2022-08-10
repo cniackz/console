@@ -39,9 +39,12 @@ crosscompile:
 lint:
 	@echo "Running $@ check"
 	@GO111MODULE=on golangci-lint cache clean
-	@echo "Running golangci-lint run... where GOPATH: ${GOPATH}"
-	@cat ./.golangci.yml
 	@GO111MODULE=on golangci-lint run --timeout=5m --config ./.golangci.yml
+
+lint-for-containers:
+	@echo "Running $@ check"
+	@GO111MODULE=on /usr/bin/golangci-lint cache clean
+	@GO111MODULE=on /usr/bin/golangci-lint run --timeout=5m --config ./.golangci.yml
 
 install: console
 	@echo "Installing console binary to '$(GOPATH)/bin/console'"
